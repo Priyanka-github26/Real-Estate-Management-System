@@ -127,3 +127,38 @@ class Client(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class PropertyInquiry(models.Model):
+
+    INQUIRY_STATUS = [
+        ('new', 'New'),
+        ('contacted', 'Contacted'),
+        ('in_progress', 'In Progress'),
+        ('closed', 'Closed'),
+    ]
+
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        related_name='inquiries'
+    )
+
+    property = models.ForeignKey(
+        Property,
+        on_delete=models.CASCADE,
+        related_name='inquiries'
+    )
+
+    message = models.TextField()
+
+    status = models.CharField(
+        max_length=20,
+        choices=INQUIRY_STATUS,
+        default='new'
+    )
+
+    inquiry_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.client.name} - {self.property.title}"
