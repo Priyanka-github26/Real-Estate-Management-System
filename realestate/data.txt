@@ -1,0 +1,68 @@
+#Why are we checking?
+#- Django – backend framework.
+#- Django REST Framework – API development.
+#- mysqlclient – MySQL database connection.
+#- Pillow – image processing and uploads.
+#- pip check – detects incompatible package versions.
+
+# Create virtual environment
+py -m venv venv
+
+# Activate environment (Windows PowerShell)
+.\venv\Scripts\Activate.ps1
+
+# Install Django
+pip install django==4.2.27
+
+# Create Django project
+django-admin startproject realestate .
+
+# Create app
+python manage.py startapp properties
+
+# Check project
+python manage.py check
+
+# Apply migrations
+python manage.py migrate
+
+# Create admin account
+python manage.py createsuperuser
+
+# Start server
+python manage.py runserver
+
+Technology	    What you learned
+Python	        Virtual environments and package installation
+Django	        Project and app structure
+MySQL	        Database creation and connection
+Django ORM	    How Django manages database migrations
+Django Admin	Administrative dashboard
+Git	Version     control basics
+
+Q1. What is Django?
+Django is a high-level Python web framework used to develop secure, 
+scalable, and maintainable web applications quickly. 
+It follows the MVT (Model-View-Template) architecture.
+
+
+Q2. What is the difference between a Django project and a Django app?
+A Django project is the complete web application containing configuration and settings. 
+A Django app is a modular component that performs a specific function. 
+For example, realestate is our project and properties is our app.
+
+
+Q3. What is a virtual environment in Python, and why do we use it?
+A virtual environment is an isolated Python environment used to manage 
+project-specific packages and dependencies without affecting other Python projects.
+
+
+Q4. What are Django migrations?
+Migrations are Django's way of tracking and applying changes to database schemas. 
+makemigrations creates migration files, while migrate applies those changes to the database.
+
+
+Q5. What is Django Admin, and what is a superuser?
+Django Admin is a built-in interface for managing application data. 
+A superuser is an administrator account with full permissions to manage the Django admin site.
+
