@@ -66,3 +66,24 @@ Q5. What is Django Admin, and what is a superuser?
 Django Admin is a built-in interface for managing application data. 
 A superuser is an administrator account with full permissions to manage the Django admin site.
 
+Q6. What is Django ORM?
+Django ORM (Object Relational Mapper) allows developers to interact with databases 
+using Python code instead of writing SQL queries manually.
+
+Q7. What is the difference between makemigrations and migrate?
+- makemigrations: Creates migration files based on model changes.
+- migrate: Applies those migration files to the database.
+
+Q8. What is a ForeignKey in Django?
+ForeignKey defines a many-to-one relationship between two models.
+Example: One agent can manage many properties, 
+but each property belongs to one agent.
+
+Q9. What is the purpose of on_delete=models.CASCADE?
+It automatically deletes related records when the referenced parent record is deleted.
+Example: If an agent is deleted, their associated properties are also deleted.
+
+Q10. What is Django Admin?
+Django Admin is a built-in administrative interface that allows developers 
+to create, view, update and delete database records.
+
