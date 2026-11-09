@@ -162,3 +162,42 @@ class PropertyInquiry(models.Model):
 
     def __str__(self):
         return f"{self.client.name} - {self.property.title}"
+
+
+class PropertyTour(models.Model):
+
+    TOUR_STATUS = [
+        ('scheduled', 'Scheduled'),
+        ('confirmed', 'Confirmed'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        related_name='tours'
+    )
+
+    property = models.ForeignKey(
+        Property,
+        on_delete=models.CASCADE,
+        related_name='tours'
+    )
+
+    tour_date = models.DateField()
+
+    tour_time = models.TimeField()
+
+    status = models.CharField(
+        max_length=20,
+        choices=TOUR_STATUS,
+        default='scheduled'
+    )
+
+    notes = models.TextField(blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Tour: {self.property.title} - {self.client.name}"
