@@ -201,3 +201,53 @@ class PropertyTour(models.Model):
 
     def __str__(self):
         return f"Tour: {self.property.title} - {self.client.name}"
+
+
+class FavoriteProperty(models.Model):
+
+    user = models.ForeignKey(
+        'auth.User',
+        on_delete=models.CASCADE,
+        related_name='favorite_properties'
+    )
+
+    property = models.ForeignKey(
+        Property,
+        on_delete=models.CASCADE,
+        related_name='favorited_by'
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'property')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.property.title}"
+
+
+class PropertyViewLog(models.Model):
+
+    property = models.ForeignKey(
+        Property,
+        on_delete=models.CASCADE,
+        related_name='view_logs'
+    )
+
+    user = models.ForeignKey(
+        'auth.User',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='property_views'
+    )
+
+    viewed_at = models.DateTimeField(auto_now_add=True)
+
+    ip_address = models.GenericIPAddressField(
+        null=True,
+        blank=True
+    )
+
+    def __str__(self):
+        return f"{self.property.title} viewed at {self.viewed_at}"
