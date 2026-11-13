@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Property, Client, PropertyInquiry
+from .models import Property, Agent, Client, PropertyInquiry, PropertyTour
 from .forms import ClientForm, PropertyInquiryForm
 
 def home(request):
@@ -102,3 +102,19 @@ def property_inquiry(request, property_id):
         'form': form,
         'property': property,
     })
+    
+def dashboard(request):
+    context = {
+        'total_properties': Property.objects.count(),
+        'available_properties': Property.objects.filter(status='available').count(),
+        'sold_properties': Property.objects.filter(status='sold').count(),
+        'rented_properties': Property.objects.filter(status='rented').count(),
+        'total_agents': Agent.objects.count(),
+        'total_clients': Client.objects.count(),
+        'total_inquiries': PropertyInquiry.objects.count(),
+        'pending_inquiries': PropertyInquiry.objects.filter(status='new').count(),
+        'total_tours': PropertyTour.objects.count(),
+    }
+
+    return render(request, 'properties/dashboard.html', context)
+
