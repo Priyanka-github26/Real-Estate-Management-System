@@ -1,7 +1,6 @@
-
-from django.shortcuts import render, get_object_or_404
-from .models import Property
-
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Property, Client, PropertyInquiry
+from .forms import ClientForm, PropertyInquiryForm
 
 def home(request):
     return render(request, 'properties/home.html')
@@ -59,3 +58,47 @@ def property_detail(request, property_id):
         'properties/property_detail.html',
         {'property': property}
     )
+
+def client_register(request):
+    if request.method == 'POST':
+        form = ClientForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('property_list')
+
+    else:
+        form = ClientForm()
+
+    return render(request, 'properties/client_register.html', {
+        'form': form
+    })
+    
+def property_inquiry(request, property_id):
+    property = get_object_or_404(Property, id=property_id)
+
+    if request.method == 'POST':
+        form = PropertyInquiryForm(request.POST)
+
+        if form.is_valid():
+            inquiry = form.save(commit=False)
+
+            # Find the registered client using their email
+            email = request.POST.get('email', '').strip()
+            client = Client.objects.filter(email__iexact=email).first()
+
+            if client:
+                inquiry.client = client
+                inquiry.property = property
+                inquiry.save()
+                return redirect('property_detail', property_id=property.id)
+
+            form.add_error(None, 'Please register as a client first.')
+
+    else:
+        form = PropertyInquiryForm()
+
+    return render(request, 'properties/property_inquiry.html', {
+        'form': form,
+        'property': property,
+    })
