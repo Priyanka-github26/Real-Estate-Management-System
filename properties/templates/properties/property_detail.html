@@ -29,13 +29,44 @@
         <div class="card-body p-4">
 
             <h2 class="text-primary fw-bold">{{ property.title }}</h2>
-
             <h3 class="text-success mt-3">₹{{ property.price }}</h3>
 
             <hr>
 
             <h5>Property Description</h5>
             <p>{{ property.description }}</p>
+
+            <!-- Property Image Gallery -->
+            <h5 class="mt-4">Property Image Gallery</h5>
+
+<div class="row g-3">
+    {% for image in property.images.all %}
+        {% if image.image %}
+            <div class="col-md-4 col-sm-6">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ image.image.url }}"
+                         class="card-img-top"
+                         alt="{{ image.caption|default:property.title }}"
+                         style="height: 220px; object-fit: cover;">
+
+                    {% if image.caption %}
+                        <div class="card-body">
+                            <p class="card-text text-center mb-0">
+                                {{ image.caption }}
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% empty %}
+        <div class="col-12">
+            <p class="text-muted">No property images uploaded yet.</p>
+        </div>
+    {% endfor %}
+</div>
+
+            <hr>
 
             <h5 class="mt-4">Property Details</h5>
 
