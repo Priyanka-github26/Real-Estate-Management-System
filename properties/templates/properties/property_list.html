@@ -12,7 +12,6 @@
 
 <body class="bg-light">
 
-<!-- Navbar -->
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand fw-bold" href="/">RealEstate</a>
@@ -22,7 +21,6 @@
 
 <div class="container mt-5">
 
-    <!-- Page Heading -->
     <h1 class="text-primary fw-bold text-center">
         Available Properties
     </h1>
@@ -31,114 +29,55 @@
         Explore properties available for sale and rent.
     </p>
 
-    <!-- Search and Filter Form -->
     <form method="GET" class="row mb-4 mt-4 g-2">
 
-        <!-- Search by City -->
-        <div class="col-md-5">
-            <input
-                type="text"
-                name="city"
-                class="form-control"
-                placeholder="Search by city..."
-                value="{{ city|default:'' }}"
-            >
+        <div class="col-md-3">
+            <input type="text" name="city" class="form-control"
+                   placeholder="Search by city..."
+                   value="{{ city|default:'' }}">
         </div>
 
-        <!-- Filter by Property Type -->
-        <div class="col-md-3">
+        <div class="col-md-2">
             <select name="property_type" class="form-select">
-
                 <option value="">All Property Types</option>
-
-                <option value="apartment"
-                    {% if property_type == 'apartment' %}selected{% endif %}>
-                    Apartment
-                </option>
-
-                <option value="house"
-                    {% if property_type == 'house' %}selected{% endif %}>
-                    House
-                </option>
-
-                <option value="villa"
-                    {% if property_type == 'villa' %}selected{% endif %}>
-                    Villa
-                </option>
-
-                <option value="commercial"
-                    {% if property_type == 'commercial' %}selected{% endif %}>
-                    Commercial
-                </option>
-
-                <option value="land"
-                    {% if property_type == 'land' %}selected{% endif %}>
-                    Land
-                </option>
-
+                <option value="apartment" {% if property_type == 'apartment' %}selected{% endif %}>Apartment</option>
+                <option value="house" {% if property_type == 'house' %}selected{% endif %}>House</option>
+                <option value="villa" {% if property_type == 'villa' %}selected{% endif %}>Villa</option>
+                <option value="commercial" {% if property_type == 'commercial' %}selected{% endif %}>Commercial</option>
+                <option value="land" {% if property_type == 'land' %}selected{% endif %}>Land</option>
             </select>
         </div>
 
-         <!-- Filter by Sale or Rent -->
-    <div class="col-md-3">
-        <select name="listing_type" class="form-select">
+        <div class="col-md-2">
+            <select name="listing_type" class="form-select">
+                <option value="">Sale or Rent</option>
+                <option value="sale" {% if listing_type == 'sale' %}selected{% endif %}>For Sale</option>
+                <option value="rent" {% if listing_type == 'rent' %}selected{% endif %}>For Rent</option>
+            </select>
+        </div>
 
-            <option value="">Sale or Rent</option>
+        <div class="col-md-2">
+            <input type="number" name="min_price" class="form-control"
+                   placeholder="Min Price" value="{{ min_price|default:'' }}" min="0">
+        </div>
 
-            <option value="sale"
-                {% if listing_type == 'sale' %}selected{% endif %}>
-                For Sale
-            </option>
+        <div class="col-md-2">
+            <input type="number" name="max_price" class="form-control"
+                   placeholder="Max Price" value="{{ max_price|default:'' }}" min="0">
+        </div>
 
-            <option value="rent"
-                {% if listing_type == 'rent' %}selected{% endif %}>
-                For Rent
-            </option>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
 
-        </select>
-    </div>
-
-    <!-- Buttons -->
-    <div class="col-md-2">
-        <button type="submit" class="btn btn-primary">
-            Search
-        </button>
-
-        <a href="{% url 'property_list' %}"
-           class="btn btn-secondary">
-            Reset
-        </a>
-    </div>
-
-
-<!-- Minimum Price -->
-<div class="col-md-3">
-    <input
-        type="number"
-        name="min_price"
-        class="form-control"
-        placeholder="Minimum Price"
-        value="{{ min_price|default:'' }}"
-        min="0"
-    >
-</div>
-
-<!-- Maximum Price -->
-<div class="col-md-3">
-    <input
-        type="number"
-        name="max_price"
-        class="form-control"
-        placeholder="Maximum Price"
-        value="{{ max_price|default:'' }}"
-        min="0"
-    >
-</div>
-
+        <div class="col-12">
+            <a href="{% url 'property_list' %}" class="btn btn-secondary btn-sm">
+                Reset Filters
+            </a>
+        </div>
 
     </form>
 
-    <!-- Property Cards -->
     <div class="row mt-4">
 
         {% for property in properties %}
@@ -147,44 +86,28 @@
 
             <div class="card shadow-sm h-100">
 
+                {% for image in property.propertyimage_set.all %}
+                    {% if image.is_primary %}
+                        <img src="{{ image.image.url }}"
+                             class="card-img-top"
+                             alt="{{ property.title }}"
+                             style="height: 220px; object-fit: cover;">
+                    {% endif %}
+                {% endfor %}
+
                 <div class="card-body">
 
-                    <h5 class="card-title">
-                        {{ property.title }}
-                    </h5>
+                    <h5 class="card-title">{{ property.title }}</h5>
 
-                    <h4 class="text-success">
-                        ₹{{ property.price }}
-                    </h4>
+                    <h4 class="text-success">₹{{ property.price }}</h4>
 
-                    <p class="text-muted">
-                        {{ property.city }}, {{ property.state }}
-                    </p>
+                    <p class="text-muted">{{ property.city }}, {{ property.state }}</p>
 
-                    <p>
-                        <strong>Type:</strong>
-                        {{ property.property_type }}
-                    </p>
-
-                    <p>
-                        <strong>Listing:</strong>
-                        {{ property.listing_type }}
-                    </p>
-
-                    <p>
-                        <strong>Bedrooms:</strong>
-                        {{ property.bedrooms }}
-                    </p>
-
-                    <p>
-                        <strong>Bathrooms:</strong>
-                        {{ property.bathrooms }}
-                    </p>
-
-                    <p>
-                        <strong>Area:</strong>
-                        {{ property.area_sqft }} sq.ft.
-                    </p>
+                    <p><strong>Type:</strong> {{ property.property_type }}</p>
+                    <p><strong>Listing:</strong> {{ property.listing_type }}</p>
+                    <p><strong>Bedrooms:</strong> {{ property.bedrooms }}</p>
+                    <p><strong>Bathrooms:</strong> {{ property.bathrooms }}</p>
+                    <p><strong>Area:</strong> {{ property.area_sqft }} sq.ft.</p>
 
                     <a href="{% url 'property_detail' property.id %}"
                        class="btn btn-primary mt-2">
@@ -192,9 +115,7 @@
                     </a>
 
                 </div>
-
             </div>
-
         </div>
 
         {% empty %}
