@@ -4,110 +4,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Analytics Dashboard | RealEstate</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+
+        .navbar {
+            background: #172554;
+        }
+
+        .dashboard-title {
+            font-weight: 700;
+            color: #172554;
+        }
+
+        .stat-card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h6 {
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .stat-card h2 {
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .card-blue { border-left: 5px solid #2563eb; }
+        .card-green { border-left: 5px solid #16a34a; }
+        .card-red { border-left: 5px solid #dc2626; }
+        .card-yellow { border-left: 5px solid #eab308; }
+        .card-purple { border-left: 5px solid #9333ea; }
+        .card-teal { border-left: 5px solid #0d9488; }
+
+        .dashboard-footer {
+            color: #64748b;
+            font-size: 13px;
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="/">RealEstate</a>
-        <a href="/" class="btn btn-outline-light">Home</a>
+        <a class="navbar-brand fw-bold" href="/">
+            RealEstate Management
+        </a>
+
+        <a href="/" class="btn btn-outline-light btn-sm">
+            Back to Home
+        </a>
     </div>
 </nav>
 
-<div class="container mt-4">
+<div class="container py-5">
 
-    <h2 class="mb-4">Analytics Dashboard</h2>
+    <div class="mb-4">
+        <h2 class="dashboard-title">Analytics Dashboard</h2>
+        <p class="text-muted">
+            Overview of your real estate management system
+        </p>
+    </div>
 
     <div class="row g-4">
 
-        <div class="col-md-4">
-            <div class="card shadow-sm border-primary">
-                <div class="card-body">
+        <div class="col-md-4 col-lg-4">
+            <div class="card stat-card card-blue shadow-sm h-100">
+                <div class="card-body p-4">
                     <h6>Total Properties</h6>
                     <h2 class="text-primary">{{ total_properties }}</h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card shadow-sm border-success">
-                <div class="card-body">
+        <div class="col-md-4 col-lg-4">
+            <div class="card stat-card card-green shadow-sm h-100">
+                <div class="card-body p-4">
                     <h6>Available Properties</h6>
                     <h2 class="text-success">{{ available_properties }}</h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card shadow-sm border-danger">
-                <div class="card-body">
+        <div class="col-md-4 col-lg-4">
+            <div class="card stat-card card-red shadow-sm h-100">
+                <div class="card-body p-4">
                     <h6>Sold Properties</h6>
                     <h2 class="text-danger">{{ sold_properties }}</h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card shadow-sm border-warning">
-                <div class="card-body">
+        <div class="col-md-4 col-lg-4">
+            <div class="card stat-card card-yellow shadow-sm h-100">
+                <div class="card-body p-4">
                     <h6>Rented Properties</h6>
                     <h2 class="text-warning">{{ rented_properties }}</h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
+        <div class="col-md-4 col-lg-4">
+            <div class="card stat-card card-purple shadow-sm h-100">
+                <div class="card-body p-4">
                     <h6>Total Agents</h6>
-                    <h2>{{ total_agents }}</h2>
+                    <h2 class="text-primary">{{ total_agents }}</h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
+        <div class="col-md-4 col-lg-4">
+            <div class="card stat-card card-teal shadow-sm h-100">
+                <div class="card-body p-4">
                     <h6>Total Clients</h6>
-                    <h2>{{ total_clients }}</h2>
+                    <h2 class="text-info">{{ total_clients }}</h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
+        <div class="col-md-4 col-lg-4">
+            <div class="card stat-card card-blue shadow-sm h-100">
+                <div class="card-body p-4">
                     <h6>Total Inquiries</h6>
-                    <h2>{{ total_inquiries }}</h2>
+                    <h2 class="text-primary">{{ total_inquiries }}</h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card shadow-sm border-warning">
-                <div class="card-body">
+        <div class="col-md-4 col-lg-4">
+            <div class="card stat-card card-yellow shadow-sm h-100">
+                <div class="card-body p-4">
                     <h6>New Inquiries</h6>
                     <h2 class="text-warning">{{ pending_inquiries }}</h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
+        <div class="col-md-4 col-lg-4">
+            <div class="card stat-card card-purple shadow-sm h-100">
+                <div class="card-body p-4">
                     <h6>Total Property Tours</h6>
-                    <h2>{{ total_tours }}</h2>
+                    <h2 class="text-primary">{{ total_tours }}</h2>
                 </div>
             </div>
         </div>
 
     </div>
+
+    <!-- Analytics Charts -->
+<div class="row g-4 mt-3">
+
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-body">
+                <h5 class="fw-bold mb-4">Property Status Overview</h5>
+                <canvas id="propertyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-body">
+                <h5 class="fw-bold mb-4">Inquiry Overview</h5>
+                <canvas id="inquiryChart"></canvas>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<!-- Footer -->
+<div class="text-center mt-5 dashboard-footer">
+    RealEstate Management System | Analytics Dashboard
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Property Status Chart
+    new Chart(document.getElementById('propertyChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Available', 'Sold', 'Rented'],
+            datasets: [{
+                data: [
+                    {{ available_properties }},
+                    {{ sold_properties }},
+                    {{ rented_properties }}
+                ],
+                backgroundColor: ['#16a34a', '#dc2626', '#eab308']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Inquiry Overview Chart
+    new Chart(document.getElementById('inquiryChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Total Inquiries', 'New Inquiries'],
+            datasets: [{
+                label: 'Number of Inquiries',
+                data: [
+                    {{ total_inquiries }},
+                    {{ pending_inquiries }}
+                ],
+                backgroundColor: ['#2563eb', '#eab308']
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+</script>
 </body>
 </html>
 
+
+</body>
+</html>
