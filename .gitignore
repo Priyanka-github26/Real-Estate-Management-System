@@ -9,7 +9,8 @@ venv312/
 # Environment variables
 .env
 
-# Django generated files
+# Django
+db.sqlite3
 staticfiles/
 media/
 *.log
